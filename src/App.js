@@ -8,7 +8,7 @@ function App() {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/goals")
+    fetch("https://smart-goal-752a.onrender.com/goals")
       .then((res) => res.json())
       .then((data) => setGoals(data))
       .catch((err) => console.error("Fetch error:", err));
@@ -31,7 +31,7 @@ function App() {
       savedAmount: goal.savedAmount + amount,
     };
 
-    fetch(`http://localhost:3001/goals/${goalId}`, {
+    fetch(`https://smart-goal-752a.onrender.com/goals`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ savedAmount: updatedGoal.savedAmount }),
