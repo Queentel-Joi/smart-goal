@@ -8,14 +8,14 @@ function App() {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
-    fetch("https://smart-goal-752a.onrender.com/goals")
+    fetch("https://json-server-r702.onrender.com/goals")
       .then((res) => res.json())
       .then((data) => setGoals(data))
       .catch((err) => console.error("Fetch error:", err));
   }, []);
 
   function handleAddGoal(newGoal) {
-    fetch("https://smart-goal-752a.onrender.com/goals", {
+    fetch("https://json-server-r702.onrender.com/goals", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newGoal),
@@ -31,7 +31,7 @@ function App() {
     savedAmount: goal.savedAmount + amount,
   };
 
-  fetch(`https://smart-goal-752a.onrender.com/goals/${goalId}`, {
+  fetch(`https://json-server-r702.onrender.com/goals/${goalId}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ savedAmount: updatedGoal.savedAmount }),
