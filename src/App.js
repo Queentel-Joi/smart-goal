@@ -15,7 +15,7 @@ function App() {
   }, []);
 
   function handleAddGoal(newGoal) {
-    fetch("http://localhost:3001/goals", {
+    fetch("https://smart-goal-752a.onrender.com/goals", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newGoal),
@@ -25,24 +25,25 @@ function App() {
   }
 
   function handleDeposit(goalId, amount) {
-    const goal = goals.find((g) => g.id === goalId);
-    const updatedGoal = {
-      ...goal,
-      savedAmount: goal.savedAmount + amount,
-    };
+  const goal = goals.find((g) => g.id === goalId);
+  const updatedGoal = {
+    ...goal,
+    savedAmount: goal.savedAmount + amount,
+  };
 
-    fetch(`https://smart-goal-752a.onrender.com/goals`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ savedAmount: updatedGoal.savedAmount }),
-    })
-      .then((res) => res.json())
-      .then((updated) => {
-        setGoals((prevGoals) =>
-          prevGoals.map((g) => (g.id === goalId ? updated : g))
-        );
-      });
-  }
+  fetch(`https://smart-goal-752a.onrender.com/goals/${goalId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ savedAmount: updatedGoal.savedAmount }),
+  })
+    .then((res) => res.json())
+    .then((updated) => {
+      setGoals((prevGoals) =>
+        prevGoals.map((g) => (g.id === goalId ? updated : g))
+      );
+    });
+}
+
 
   return (
     <div className="App">
@@ -55,8 +56,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
