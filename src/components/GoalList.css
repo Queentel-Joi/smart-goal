@@ -1,0 +1,145 @@
+/* Layout for the entire app */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom right, #f8f9fa, #e3f2fd);
+  margin: 0;
+  padding: 0;
+}
+
+/* Overview box at top */
+.overview-box {
+  background: #e8f5e9;
+  border: 2px solid #c8e6c9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 600px;
+  margin: 2rem auto;
+  text-align: center;
+  color: #2e7d32;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.overview-box h2 {
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+}
+
+/* Form for adding new goals */
+.add-goal-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 1.5rem auto;
+  max-width: 800px;
+}
+
+.add-goal-form input {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  flex: 1;
+  min-width: 150px;
+}
+
+.add-goal-form button {
+  padding: 0.5rem 1rem;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-goal-form button:hover {
+  background-color: #388e3c;
+}
+
+/* Grid of goals */
+.goal-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Each goal card */
+.goal-item {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.goal-item:hover {
+  transform: translateY(-5px);
+}
+
+.goal-item h3 {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 0.75rem;
+}
+
+.goal-item p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0.3rem 0;
+}
+
+/* Save and Delete buttons */
+.goal-item button {
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.goal-item .save-btn {
+  background-color: #81c784;
+  color: white;
+}
+
+.goal-item .save-btn:hover {
+  background-color: #66bb6a;
+}
+
+.goal-item .delete-btn {
+  background-color: #e57373;
+  color: white;
+}
+
+.goal-item .delete-btn:hover {
+  background-color: #ef5350;
+}
+
+/* Deadline warning colors */
+.deadline-warning {
+  color: #e53935;
+  font-weight: bold;
+}
+
+/* Progress bar */
+.progress-bar {
+  background-color: #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  height: 10px;
+}
+
+.progress-bar-fill {
+  background-color: #4caf50;
+  height: 100%;
+}

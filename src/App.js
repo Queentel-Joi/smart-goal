@@ -1,56 +1,87 @@
-import React, { useState, useEffect } from "react";
-import AddGoalForm from "./components/AddGoalForm";
+import React, { useEffect, useState } from "react";
 import GoalList from "./components/GoalList";
-import Overview from "./components/Overview";
+import AddGoalForm from "./components/AddGoalForm";
 import "./App.css";
 
 function App() {
   const [goals, setGoals] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     fetch("https://json-server-r702.onrender.com/goals")
-      .then((res) => res.json())
-      .then((data) => setGoals(data))
-      .catch((err) => console.error("Fetch error:", err));
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setGoals(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching goals:", err);
+        setError(err.message);
+        setIsLoading(false);
+      });
   }, []);
 
+
   function handleAddGoal(newGoal) {
-    fetch("https://json-server-r702.onrender.com/goals", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newGoal),
-    })
-      .then((res) => res.json())
-      .then((addedGoal) => setGoals((prev) => [...prev, addedGoal]));
+    setGoals((prevGoals) => [...prevGoals, newGoal]);
   }
 
-  function handleDeposit(goalId, amount) {
-  const goal = goals.find((g) => g.id === goalId);
-  const updatedGoal = {
-    ...goal,
-    savedAmount: goal.savedAmount + amount,
-  };
 
-  fetch(`https://json-server-r702.onrender.com/goals/${goalId}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ savedAmount: updatedGoal.savedAmount }),
-  })
-    .then((res) => res.json())
-    .then((updated) => {
-      setGoals((prevGoals) =>
-        prevGoals.map((g) => (g.id === goalId ? updated : g))
-      );
-    });
-}
+  function handleDeleteGoal(id) {
+    fetch(`https://json-server-r702.onrender.com/goals/${id}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== id));
+      })
+      .catch((err) => console.error("Error deleting goal:", err));
+  }
 
+  // Update a goal (e.g. deposit savings)
+  function handleUpdateGoal(updatedGoal) {
+    setGoals((prevGoals) =>
+      prevGoals.map((goal) => (goal.id === updatedGoal.id ? updatedGoal : goal))
+    );
+  }
+
+
+  const totalGoals = goals.length;
+  const completedGoals = goals.filter((goal) => goal.savedAmount >= goal.targetAmount).length;
+  const completionRate = totalGoals > 0 ? Math.round((completedGoals / totalGoals) * 100) : 0;
 
   return (
     <div className="App">
       <h1>SMART Goal Planner</h1>
-      <Overview goals={goals} />
+
+      <div className="overview">
+        <h2>Overview</h2>
+        {isLoading ? (
+          <p>Loading goals...</p>
+        ) : error ? (
+          <p style={{ color: "red" }}>Error: {error}</p>
+        ) : (
+          <>
+            <p>Total Goals: {totalGoals}</p>
+            <p>Completed Goals: {completedGoals}</p>
+            <p>Completion Rate: {completionRate}%</p>
+          </>
+        )}
+      </div>
+
       <AddGoalForm onAddGoal={handleAddGoal} />
-      <GoalList goals={goals} onDeposit={handleDeposit} />
+
+      <GoalList
+        goals={goals}
+        onDeleteGoal={handleDeleteGoal}
+        onUpdateGoal={handleUpdateGoal}
+      />
     </div>
   );
 }

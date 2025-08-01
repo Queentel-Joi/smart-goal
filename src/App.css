@@ -1,38 +1,58 @@
 .App {
-  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.goal-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.goal-card {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input {
+  margin-right: 10px;
+}
+
+button {
+  margin-top: 8px;
+  margin-right: 5px;
+  padding: 5px 10px;
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.fill {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s ease-in-out;
+}
+
+.warning {
+  color: #d97706;
+  font-weight: bold;
+}
+
+.overdue {
+  color: red;
+  font-weight: bold;
+}
+
+.complete {
+  color: green;
+  font-weight: bold;
 }
